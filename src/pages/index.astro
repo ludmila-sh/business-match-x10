@@ -44,7 +44,7 @@ const structuredData = {
 };
 ---
 
-<Base title="Бизнес Мэтч — встречи предпринимателей и экспертов в Минске" description="Бизнес Мэтч — бесплатные встречи для предпринимателей, специалистов и экспертов в Минске. Знакомства, идеи и совместные проекты." structuredData={structuredData}>
+<Base title="Бизнес Мэтч — встречи предпринимателей и практиков в Минске" description="Бизнес Мэтч — бесплатные встречи для предпринимателей, специалистов и практиков в Минске. Знакомства, идеи и совместные проекты." structuredData={structuredData}>
   <a class="skip-link" href="#main">Перейти к содержанию</a>
   <LandingHero />
   <main id="main">
@@ -153,7 +153,6 @@ const structuredData = {
         {import.meta.env.DEV && <a href="/privacy">Черновик политики · внутренний просмотр</a>}
       </div>
     </div>
-    {import.meta.env.DEV && <div class="concept-links"><span>Концепции для обсуждения:</span><a href="/hero-a">A · как на флаере</a><a href="/hero-b">B · спокойная</a></div>}
   </footer>
 </Base>
 
@@ -169,7 +168,7 @@ const structuredData = {
   .intro { padding-top: 94px; padding-bottom: 96px; }
   .intro-grid { display: grid; gap: 28px; }
   .intro-grid h2 { max-width: 570px; }
-  .intro-copy { margin: 0; color: var(--landing-muted); font-size: 1.13rem; line-height: 1.75; }
+  .intro-copy { margin: 0; color: var(--landing-muted); font-size: 1rem; line-height: 1.7; }
   .intro-note { margin: 21px 0 0; padding: 15px 16px; border: 1px solid var(--landing-border); border-left: 2px solid var(--gold-on-light); color: var(--landing-navy); font-size: 1.12rem; font-weight: 600; line-height: 1.6; }
   .intro-note strong { display: inline-block; margin-bottom: 5px; color: var(--gold-on-light); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
   .audience { padding-top: 80px; background: var(--landing-ivory); }
@@ -234,8 +233,8 @@ const structuredData = {
   .closing-cta .light { color: var(--gold-on-light); }
   .closing-cta h2 { max-width: 780px; color: var(--landing-navy); }
   .closing-cta > p { max-width: 600px; margin: 20px 0 27px; color: var(--landing-muted); line-height: 1.65; }
-  .button-light { border: 1px solid rgba(9,22,43,.12); border-radius: 10px; color: var(--landing-navy); background: var(--gold-on-dark); box-shadow: 0 8px 20px rgba(9, 22, 43, 0.22); transition: background-color .2s ease, box-shadow .2s ease, transform .2s ease; }
-  .button-light:hover { color: var(--landing-navy); background: color-mix(in srgb, var(--gold-on-dark) 82%, white); box-shadow: 0 10px 24px rgba(9, 22, 43, 0.26); }
+  .button-light { border: 1px solid transparent; border-radius: 10px; color: #0A182E; background: linear-gradient(var(--gold-on-dark), var(--gold-on-dark)) padding-box, var(--cta-gold-edge) border-box; box-shadow: 0 8px 20px rgba(9, 22, 43, 0.22), 0 0 12px rgba(207, 164, 70, 0.12); text-shadow: none; -webkit-text-stroke: 0; transition: background .2s ease, box-shadow .2s ease, transform .2s ease; }
+  .button-light:hover { color: #0A182E; background: linear-gradient(color-mix(in srgb, var(--gold-on-dark) 82%, white), color-mix(in srgb, var(--gold-on-dark) 82%, white)) padding-box, var(--cta-gold-edge) border-box; box-shadow: 0 10px 24px rgba(9, 22, 43, 0.24), 0 0 14px rgba(207, 164, 70, 0.18); }
   .button-unavailable { color: #505b6f; border: 1px solid #cbd3df; }
   .cta-telegram, .cta-phone { display: inline-flex; margin: 16px 0 0 17px; color: var(--landing-navy); font-size: .9rem; }
   .cta-phone { margin-left: 12px; }
@@ -251,13 +250,11 @@ const structuredData = {
   .footer-nav a:hover, .footer-links a:hover { color: var(--gold-on-dark); }
   .footer-links { display: flex; flex-wrap: wrap; gap: 10px 20px; color: #c0cada; font-size: .78rem; }
   .footer-links a { color: #c0cada; }
-  .concept-links { display:flex; flex-wrap:wrap; gap:8px 16px; color:#96a3ba; font-size:.72rem; }
-  .concept-links a { color:#e7d3a2; }
   @media (min-width: 900px) { .footer-inner { grid-template-columns: 1.2fr .8fr 1fr; align-items: start; gap: 44px; } .footer-links { justify-content: flex-end; text-align: right; } }
-  @media (max-width: 719px) { .results-grid { gap: 10px; } .result-card { grid-template-columns: auto minmax(0, 1fr); align-content: center; align-items: center; gap: 16px; min-height: 116px; padding: 18px; border-color: rgba(13, 33, 59, 0.16); } .result-card span { max-width: none; line-height: 1.45; } .round-card { grid-template-columns: auto minmax(0, 1fr); gap: 10px; } .round-card > span { padding-top: 2px; } }
+  @media (max-width: 719px) { .audience-card { display: grid; grid-template-columns: auto minmax(0, 1fr); align-content: start; column-gap: 12px; min-height: 0; padding: 18px; } .card-index { grid-column: 1; grid-row: 1; padding-top: 3px; } .audience-card h3 { grid-column: 2; margin: 0 0 8px; font-size: 1.08rem; } .audience-card p { grid-column: 2; max-width: none; } .results-grid { gap: 10px; } .result-card { grid-template-columns: auto minmax(0, 1fr); align-content: center; align-items: center; gap: 16px; min-height: 116px; padding: 18px; border-color: rgba(13, 33, 59, 0.16); } .result-card span { max-width: none; line-height: 1.45; } .round-card { grid-template-columns: auto minmax(0, 1fr); gap: 14px; } .round-card > span { padding-top: 2px; } .benefit-list { border-color: rgba(13, 33, 59, 0.12); } .benefit-list li { gap: 12px; padding: 12px 0; border-color: rgba(13, 33, 59, 0.12); font-size: 1rem; } .benefit-list li span { flex: 0 0 2ch; font-variant-numeric: tabular-nums; } }
   @media (min-width: 720px) { .intro-grid, .section-heading, .faq { grid-template-columns: 1fr 1fr; gap: 54px; } .audience-grid, .values-grid { grid-template-columns: repeat(2, 1fr); } .results-grid { grid-template-columns: repeat(3, 1fr); } .benefits { grid-template-columns: .9fr 1.1fr; align-items: start; gap: 80px; } .format-inner { grid-template-columns: .8fr 1.2fr; gap: 80px; } }
   @media (min-width: 1000px) { .audience-grid { grid-template-columns: repeat(4, 1fr); } .values-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   @media (max-width: 760px) { .section[id], .closing-cta[id] { scroll-margin-top: 76px; } .section, .closing-cta, .footer { padding-right: 18px; padding-left: 18px; } }
-  @media (max-width: 600px) { .section { padding-right: 18px; padding-left: 18px; } .cta-telegram, .cta-phone { margin-left: 0; } .faq { gap: 18px; } .closing-cta { padding-right: 18px; padding-left: 18px; } .footer { padding-right: 18px; padding-bottom: 96px; padding-left: 18px; } }
+  @media (max-width: 600px) { .cta-telegram, .cta-phone { margin-left: 0; } .faq { gap: 18px; } .footer { padding-bottom: 96px; } }
   @media (max-width: 380px) { .section, .closing-cta, .footer { padding-right: 16px; padding-left: 16px; } }
 </style>
