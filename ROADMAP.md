@@ -1,47 +1,61 @@
 # Roadmap
 
-## Context
+## Context and goal
 
-Бизнес Мэтч is a free monthly meeting club in Minsk (2 hours, circles of ~10 people, three rounds: introduction, project and request, joint project proposals). Season 1: 5 meetings, 6 registered joint projects, 2 successful, 1 monetized. Season 2 is running. The club has no own site or Instagram and is not findable by name. Search alone will not bring people quickly, so the site is the hub that every channel links to: announcements, flyer QR code, event listings, Telegram.
+Бизнес Мэтч is a free monthly community meeting for entrepreneurs, specialists and experts in Minsk. The website is the hub linked from announcements, partner channels and event listings. Its main goals are to make the club easier to find, explain how it works and help interested people register or contact the team.
 
-## Goal (next MVP)
+Attendance target: 18–20 participants per meeting, later up to 30. The club does not promise income or a ready-made business.
 
-A live landing page on the club's own domain that a stranger can find, read in 2 minutes and act on: sign up for the next meeting or message the team. The next meeting's date and the form link can be changed by a non-technical team member without the author.
+## Current state
 
-Success check: the page is reachable on the domain and works on a phone; a team member changes the meeting date through the editor without help; sign-ups show where people came from.
+The Astro static site and a complete landing page are built. The production page has its own implementation; `/hero-a` and `/hero-b` remain separate, noindex design previews. A preview can be deployed for review, but public launch still needs confirmed meeting details, active contacts, approved photos, a permanent domain, an editor workflow and approved legal copy.
 
-## Milestones
+## Milestone 1 — Reviewable landing page
 
-### Milestone 1 — Landing v1
+- [x] Astro static build; all content is in `src/content/site.json`.
+- [x] Mobile-first Russian landing page: club, audience, three rounds, first-season results, benefits, values, disclaimer, FAQ and contact/registration areas.
+- [x] Two first-screen visual concepts at `/hero-a` and `/hero-b`.
+- [x] Semantic HTML, page metadata, Open Graph/Twitter metadata, Organization and FAQPage JSON-LD; conditional Event JSON-LD.
+- [x] `robots.txt` blocks indexing during review; `llms.txt` contains concise factual information.
+- [x] Install scripts disabled for npm dependencies; package versions pinned; production build and dependency audit checked.
+- [ ] Get client/manager feedback on the calm visual and confirm whether it should be the production direction.
+- [ ] Request real photos and explicit permission for publication.
+- [ ] Confirm accurate first-season number wording; do not publish the ambiguous “85 participants” yet.
 
-- Design in the club's colors, restrained (see `CLAUDE.md` → Visual style).
-- Blocks: first screen with the next meeting and sign-up button; what the club is; for whom; how a meeting goes (three rounds); season 1 results; what a participant gets; values and honest disclaimer; real photos; FAQ; next meeting again; footer with Telegram, phone, privacy policy.
-- Sign-up: button to the existing Google Form with a source parameter, so the form records where the person came from.
-- SEO/GEO minimum, privacy-friendly analytics.
-- Editing: a git-based CMS for the next meeting, texts, FAQ and photos.
-- Structure allows adding a "cases / post-releases" section later without a rewrite.
+## Milestone 2 — Publish v1
 
-### Milestone 2 — Distribution and hand-off
+- [ ] Agree the official name and whether the relationship to X10 should be mentioned (current default: do not mention X10 on the website).
+- [ ] Add the next meeting’s confirmed date, time, place and registration link to `src/content/site.json`.
+- [ ] Add the team’s Telegram link and decide whether a phone number should be public.
+- [ ] Determine the personal-data operator; have the privacy policy and external-form consent reviewed by a Belarusian lawyer. The current `/privacy` page is explicitly a draft, not an approved policy.
+- [ ] Choose and buy the permanent domain; select static hosting and confirm who owns the accounts.
+- [ ] Decide how a non-technical teammate will update monthly content. Astro is approved; a CMS/editor has not been chosen or installed. Test the update workflow with the actual future editor before promising hand-off.
+- [ ] Add approved photos; prepare final Open Graph preview image and favicon from brand source files.
+- [ ] Set launch `robots.txt`, canonical domain, sitemap and hosting security headers. Enable analytics only after the team chooses a privacy-appropriate counter and confirms any legal notice requirements.
+- [ ] Verify the deployed page on phone and desktop, links, structured data and registration tracking.
 
-- Listings: club and every meeting on Minsk event listings and partner Telegram channels, each link with UTM tags.
-- Two or three team members trained to edit content; short Russian how-to for them.
-- Monthly routine: new date in the CMS → site updates → same data used for the announcement.
+## Milestone 3 — Distribution and hand-off
 
-### Later (not planned now)
+- [ ] Add UTM-tagged links to partner Telegram channels and Minsk event listings.
+- [ ] Agree how registration source will be recorded in the existing form (for example, a source field or separate links); do not assume form prefill behavior without testing it.
+- [ ] Document a simple monthly content update process and train two or three team members.
+- [ ] Review attendance and registrations after each meeting and adjust the page based on evidence.
 
-Own sign-up form, CRM, admin panel, personal accounts, resident and project catalog. The strategy document (`sources/philosophy.md`, 2027–2029) mentions resident cards, CRM and a catalog of residents and projects; revisit after v1 shows real traffic.
+## Later (not planned now)
+
+Own registration form, CRM, admin panel, member accounts, resident directory, project catalog and Telegram bot. Revisit only after the landing page and distribution show a real need.
 
 ## Open decisions
 
-- [ ] Stack and editing: Astro + git CMS (free, needs a GitHub account per editor) vs Tilda (visual editor, own domain only on a paid plan). Future editor is unknown and non-technical, so the editor UX matters more than the code.
-- [ ] Domain: name, zone, who buys and pays. Buy before launch so the site is indexed on the final address.
-- [ ] Visual style: keep the current glossy style or agree a calmer version with the manager. Ask the manager for a vector or larger logo; only small PNGs exist now.
-- [ ] Official name on the first screen: «Бизнес Мэтч» and/or «Клуб успешных коллабораций»; whether to mention X10 at all.
-- [ ] Real photos from past meetings: get them from the manager.
-- [ ] Main question wording: «Чем я могу помочь…» (flyer) or «Как я могу помочь…» (strategy, section 5).
-- [ ] Season 1 numbers: is 85 unique people or total visits over 5 meetings? Wording on the site must be exact.
-- [ ] Venue: always «Дом Силы Сообществ», ул. Коллекторная, 3А, or changes (affects the meeting block and `Event` markup).
-- [ ] Contacts: which Telegram (group or person) and whose phone, with that person's consent.
-- [ ] Personal data: data operator, consent text in the Google Form, privacy policy; agree with a lawyer.
-- [ ] Analytics: cookie-free counter (no banner) vs Yandex Metrica (goals, but cookies and likely a banner).
-- [ ] Photo consent from participants of past meetings.
+- [ ] Domain: name, zone, payer and account owner.
+- [ ] Hosting provider and account owner.
+- [ ] Production visual direction: the project author prefers the calmer concept; the manager/team has not approved it yet.
+- [ ] Future content editor: person, comfort with GitHub, and whether a git CMS or hosted visual builder is suitable.
+- [ ] Confirm exact public name and whether X10 is mentioned.
+- [ ] Confirm the main question wording with the team: “Чем я могу помочь…” or “Как я могу помочь…”.
+- [ ] Verify first-season “85” as unique participants or total visits; omit it until confirmed.
+- [ ] Confirm next meeting’s date/time/place and current registration link.
+- [ ] Confirm Telegram contact and whether to publish a phone number.
+- [ ] Obtain consent-cleared real photos and higher-resolution/vector logo files if available.
+- [ ] Identify personal-data operator and approve the privacy policy and registration-form consent with a lawyer.
+- [ ] Choose privacy-friendly analytics and confirm whether a cookie notice is needed.

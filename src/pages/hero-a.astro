@@ -1,0 +1,15 @@
+---
+import HeroGlossy from "../components/HeroGlossy.astro";
+import Base from "../layouts/Base.astro";
+import { site } from "../lib/site";
+---
+
+<Base title={`Концепция A — ${site.name}`} description={site.summary} noindex>
+  <aside class="concept-note"><span>Концепция A · в эстетике текущего флаера</span><a href="/">К лендингу</a></aside>
+  <HeroGlossy />
+</Base>
+
+<style>
+  .concept-note { display:flex; justify-content:space-between; gap:16px; padding:11px max(18px,calc((100% - 1040px)/2)); color:#fff; background:#08132c; font: .8rem/1.4 system-ui,sans-serif; }
+  .concept-note a { color:#f1dca3; }
+</style>

@@ -1,0 +1,15 @@
+---
+import HeroCalm from "../components/HeroCalm.astro";
+import Base from "../layouts/Base.astro";
+import { site } from "../lib/site";
+---
+
+<Base title={`Концепция B — ${site.name}`} description={site.summary} noindex>
+  <aside class="concept-note"><span>Концепция B · спокойная подача бренда</span><a href="/">К лендингу</a></aside>
+  <HeroCalm />
+</Base>
+
+<style>
+  .concept-note { display:flex; justify-content:space-between; gap:16px; padding:11px max(18px,calc((100% - 1040px)/2)); color:#fff; background:#08132c; font: .8rem/1.4 system-ui,sans-serif; }
+  .concept-note a { color:#f1dca3; }
+</style>

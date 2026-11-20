@@ -1,0 +1,247 @@
+---
+import Base from "../layouts/Base.astro";
+import LandingHero from "../components/LandingHero.astro";
+import { formatMeetingDate, hasAnnouncedMeeting, site } from "../lib/site";
+
+const meetingAnnounced = hasAnnouncedMeeting();
+const meetingDate = site.nextMeeting.date ? formatMeetingDate(site.nextMeeting.date) : null;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      name: site.name,
+      description: site.summary,
+      address: { "@type": "PostalAddress", addressLocality: "Минск", addressCountry: "BY" },
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: site.faq.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: { "@type": "Answer", text: item.answer },
+      })),
+    },
+    ...(site.nextMeeting.date && site.nextMeeting.startTime && site.nextMeeting.endTime && site.nextMeeting.venueName && site.nextMeeting.address && site.nextMeeting.registrationUrl
+      ? [{
+          "@type": "Event",
+          name: `${site.name} — встреча клуба`,
+          startDate: `${site.nextMeeting.date}T${site.nextMeeting.startTime}:00+03:00`,
+          endDate: `${site.nextMeeting.date}T${site.nextMeeting.endTime}:00+03:00`,
+          eventStatus: "https://schema.org/EventScheduled",
+          eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+          isAccessibleForFree: true,
+          location: {
+            "@type": "Place",
+            name: site.nextMeeting.venueName,
+            address: { "@type": "PostalAddress", streetAddress: site.nextMeeting.address, addressLocality: site.nextMeeting.city, addressCountry: "BY" },
+          },
+          organizer: { "@type": "Organization", name: site.name },
+        }]
+      : []),
+  ],
+};
+---
+
+<Base title="Бизнес Мэтч — встречи предпринимателей и экспертов в Минске" description="Бизнес Мэтч — бесплатные встречи для предпринимателей, специалистов и экспертов в Минске. Знакомства, идеи и совместные проекты." structuredData={structuredData}>
+  <a class="skip-link" href="#main">Перейти к содержанию</a>
+  <LandingHero />
+  <main id="main">
+    <section class="section intro" id="about">
+      <div class="section-label">{site.about.eyebrow}</div>
+      <div class="intro-grid">
+        <h2>{site.about.title}</h2>
+        <div>
+          <p class="intro-copy">{site.about.text}</p>
+          <p class="intro-note"><strong>Главный вопрос клуба</strong><br />«{site.mainQuestion}»</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section audience" id="for-whom">
+      <div class="section-heading">
+        <div><div class="section-label">Для кого</div><h2>Если вам есть чем поделиться — вам есть место за столом</h2></div>
+        <p>Для людей с разным опытом и масштабом дела. Важно желание действовать, быть полезным и открыто обсуждать идеи.</p>
+      </div>
+      <div class="audience-grid">
+        {site.audiences.map((item, index) => <article class="audience-card"><span class="card-index">0{index + 1}</span><h3>{item.title}</h3><p>{item.text}</p></article>)}
+      </div>
+    </section>
+
+    <section class="format-band" id="format">
+      <div class="section format-inner">
+        <div class="format-heading">
+          <div class="section-label light">Как проходит встреча</div>
+          <h2>Два часа,<br />три раунда разговора</h2>
+          <p>Участники сидят небольшими кругами примерно по десять человек. Внутри встречи каждый проходит три раунда.</p>
+          <span class="duration">Около 2 часов · бесплатно · Минск</span>
+        </div>
+        <div class="round-list">
+          {site.rounds.map((round) => <article class="round-card"><span>{round.number}</span><div><h3>{round.title}</h3><p>{round.text}</p></div></article>)}
+        </div>
+      </div>
+    </section>
+
+    <section class="section results" id="results">
+      <div class="section-heading results-heading">
+        <div><div class="section-label">Первый сезон</div><h2>Что уже получилось</h2></div>
+        <p>За пять встреч участники зарегистрировали совместные проекты. Эти цифры — опыт сообщества, а не обещание результата для каждого.</p>
+      </div>
+      <div class="results-grid">
+        {site.results.map((item) => <article class="result-card"><strong>{item.value}</strong><span>{item.label}</span></article>)}
+      </div>
+    </section>
+
+    <section class="section benefits" id="benefits">
+      <div class="benefits-copy"><div class="section-label">Что вы получаете</div><h2>Возможности начинаются с разговора</h2><p>На встрече можно рассказать о своей работе, услышать свежий взгляд и увидеть, где опыт или ресурс одного человека может пригодиться другому.</p></div>
+      <ul class="benefit-list">{site.benefits.map((benefit, index) => <li><span>0{index + 1}</span>{benefit}</li>)}</ul>
+    </section>
+
+    <section class="values-band" id="values">
+      <div class="section values-inner">
+        <div class="values-heading"><div class="section-label light">Наш культурный код</div><h2>Человек важнее визитки</h2><p>Клуб объединяет тех, кто готов развиваться, приносить пользу и отвечать за свои действия.</p></div>
+        <div class="values-grid">{site.values.map((value, index) => <article class="value-card"><span>0{index + 1}</span><h3>{value.title}</h3><p>{value.text}</p></article>)}</div>
+        <p class="promise">{site.disclaimer}</p>
+      </div>
+    </section>
+
+    <section class="section gallery" id="gallery">
+      <div class="section-heading">
+        <div><div class="section-label">Встречи клуба</div><h2>{site.gallery.title}</h2></div>
+        <p>{site.gallery.description}</p>
+      </div>
+      <div class="gallery-placeholder" role="note">
+        <div class="photo-symbol" aria-hidden="true"><span></span><span></span><span></span></div>
+        <p>Место для фотографий с прошлых встреч</p>
+        <small>Добавим реальные снимки после подтверждения согласия участников</small>
+      </div>
+    </section>
+
+    <section class="section faq" id="faq">
+      <div class="faq-heading"><div class="section-label">FAQ</div><h2>Перед первой встречей</h2><p>{site.contacts.telegramUrl || site.contacts.phone ? "Если остался вопрос, напишите или позвоните команде." : "Контакты команды сейчас уточняются и появятся здесь."}</p></div>
+      <div class="faq-list">{site.faq.map((item) => <details><summary>{item.question}<span aria-hidden="true">+</span></summary><p>{item.answer}</p></details>)}</div>
+    </section>
+
+    <section class="closing-cta" id="next-meeting">
+      <div class="section-label light">Ближайшая встреча</div>
+      <h2>Встречаемся, чтобы находить возможности друг для друга</h2>
+      {meetingAnnounced && meetingDate ? (
+        <p class="meeting-summary"><strong>{meetingDate.day}, {meetingDate.weekday}</strong><br />{site.nextMeeting.startTime}–{site.nextMeeting.endTime} · {site.nextMeeting.venueName}, {site.nextMeeting.address}, {site.nextMeeting.city}<br />Участие бесплатное.</p>
+      ) : (
+        <p>Встречи проходят бесплатно раз в месяц в Минске. Дату и ссылку для записи команда добавит после анонса.</p>
+      )}
+      {meetingAnnounced ? <a class="button button-light" href={site.nextMeeting.registrationUrl} target="_blank" rel="noopener noreferrer">Записаться на встречу <span aria-hidden="true">→</span></a> : <span class="button button-unavailable" aria-disabled="true">Дата следующей встречи появится здесь</span>}
+      {site.contacts.telegramUrl && <a class="cta-telegram" href={site.contacts.telegramUrl} target="_blank" rel="noopener noreferrer">Написать команде в Telegram</a>}
+      {site.contacts.phone && <a class="cta-phone" href={`tel:${site.contacts.phone.replace(/[^+\d]/g, "")}`}>Позвонить команде</a>}
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a class="footer-brand" href="#top">{site.name}<span>{site.tagline}</span></a>
+    <p>{site.motto}</p>
+    <div class="footer-links">
+      {site.contacts.telegramUrl && <a href={site.contacts.telegramUrl} target="_blank" rel="noopener noreferrer">Telegram</a>}
+      {site.contacts.phone && <a href={`tel:${site.contacts.phone.replace(/[^+\d]/g, "")}`}>{site.contacts.phone}</a>}
+      {import.meta.env.DEV && <a href="/privacy">Черновик политики · внутренний просмотр</a>}
+    </div>
+    {import.meta.env.DEV && <div class="concept-links"><span>Концепции для обсуждения:</span><a href="/hero-a">A · как на флаере</a><a href="/hero-b">B · спокойная</a></div>}
+    <small>Минск · участие во встречах бесплатное</small>
+  </footer>
+</Base>
+
+<style>
+  .skip-link { position: absolute; z-index: 40; top: -60px; left: 16px; padding: 10px 14px; color: #fff; background: var(--navy-900); }
+  .skip-link:focus { top: 12px; }
+  .section[id], .closing-cta[id] { scroll-margin-top: 88px; }
+  .section { width: 100%; margin: 0; padding: clamp(70px, 9vw, 112px) max(22px, calc((100% - 1120px)/2)); background: transparent; }
+  .section-label { margin-bottom: 12px; color: var(--landing-gold-text); font-size: .73rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
+  h2 { margin: 0; color: var(--navy-900); font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.05rem, 5vw, 3.7rem); font-weight: 400; letter-spacing: -.035em; line-height: 1.12; }
+  .intro, .results, .gallery { background: #fff; }
+  .intro { padding-top: 94px; padding-bottom: 96px; }
+  .intro-grid { display: grid; gap: 28px; }
+  .intro-grid h2 { max-width: 570px; }
+  .intro-copy { margin: 0; color: var(--ink-700); font-size: 1.13rem; line-height: 1.75; }
+  .intro-note { margin: 21px 0 0; padding: 15px 0 0 16px; border-top: 1px solid var(--landing-border); border-left: 2px solid var(--landing-gold); color: var(--landing-navy); font-size: 1.12rem; font-weight: 600; line-height: 1.6; }
+  .intro-note strong { display: inline-block; margin-bottom: 5px; color: var(--landing-gold-text); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
+  .audience { padding-top: 80px; background: var(--landing-ivory); }
+  .section-heading { display: grid; gap: 20px; align-items: end; margin-bottom: 34px; }
+  .section-heading h2 { max-width: 670px; }
+  .section-heading > p { max-width: 430px; margin: 0; color: var(--ink-700); line-height: 1.7; }
+  .audience-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .audience-card { min-height: 205px; padding: 24px; border: 1px solid var(--landing-border); background: #fff; }
+  .card-index { color: var(--landing-gold-text); font-size: .72rem; letter-spacing: .1em; }
+  .audience-card h3 { margin: 26px 0 9px; color: var(--navy-800); font-size: 1.16rem; }
+  .audience-card p { max-width: 310px; margin: 0; color: var(--ink-700); font-size: .92rem; line-height: 1.6; }
+  .format-band, .values-band { color: #fff; background: linear-gradient(180deg, var(--landing-navy) 0%, #14334A 100%); }
+  .format-inner { display: grid; gap: 48px; }
+  .light { color: var(--landing-gold); }
+  .format-heading h2, .values-heading h2 { color: #fff; }
+  .format-heading > p, .values-heading > p { max-width: 410px; color: #d5dce8; line-height: 1.7; }
+  .duration { display: inline-block; margin-top: 13px; padding: 8px 11px; border: 1px solid rgba(194,155,72,.42); color: #fff; font-size: .84rem; }
+  .round-list { border-top: 1px solid #53617c; }
+  .round-card { display: grid; grid-template-columns: 47px 1fr; gap: 16px; padding: 22px 0; border-bottom: 1px solid #53617c; }
+  .round-card > span { color: var(--landing-gold); font-size: .8rem; }
+  .round-card h3 { margin: 0 0 6px; color: #fff; font-size: 1.15rem; }
+  .round-card p { margin: 0; color: #d5dce8; font-size: .92rem; line-height: 1.6; }
+  .results { padding-bottom: 76px; }
+  .results-heading { margin-bottom: 26px; }
+  .results-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .result-card { display: grid; align-content: space-between; min-height: 172px; padding: 24px; border: 1px solid var(--landing-border); background: #fff; }
+  .result-card strong { color: var(--landing-gold); font-size: clamp(3.6rem, 7vw, 5rem); font-weight: 600; letter-spacing: -.05em; line-height: 1; }
+  .result-card span { max-width: 190px; color: var(--ink-700); font-size: .9rem; }
+  .results-note { margin: 15px 0 0; color: #727887; font-size: .76rem; line-height: 1.55; }
+  .benefits { display: grid; gap: 38px; padding-top: 86px; background: var(--landing-ivory); }
+  .benefits-copy > p { max-width: 465px; color: var(--ink-700); line-height: 1.7; }
+  .benefit-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid #d9e0ea; }
+  .benefit-list li { display: flex; align-items: baseline; gap: 17px; padding: 15px 0; border-bottom: 1px solid #d9e0ea; font-size: 1.02rem; }
+  .benefit-list li span { color: var(--landing-gold-text); font-size: .7rem; }
+  .values-inner { display: grid; gap: 18px; padding-top: 48px; padding-bottom: 52px; }
+  .values-heading { max-width: 600px; }
+  .values-heading > p { max-width: 520px; margin: 10px 0 0; font-size: .98rem; line-height: 1.55; }
+  .values-heading h2 { font-family: var(--font-sans); font-size: clamp(1.9rem, 4.4vw, 3.2rem); font-weight: 600; letter-spacing: -.04em; }
+  .values-grid { display: grid; grid-template-columns: 1fr; gap: 8px; width: min(100%, 920px); }
+  .value-card { display: grid; grid-template-columns: 30px minmax(0, 1fr); align-content: start; column-gap: 12px; row-gap: 3px; min-height: 0; padding: 14px 16px; border: 1px solid rgba(255,255,255,.13); background: rgba(255,255,255,.025); }
+  .value-card > span { grid-row: 1 / span 2; padding-top: 2px; color: var(--landing-gold); font-size: .72rem; }
+  .value-card h3 { margin: 0 0 3px; color: #fff; font-size: 1rem; }
+  .value-card p { grid-column: 2; margin: 0; color: #d5dce8; font-size: .9rem; line-height: 1.48; }
+  .promise { max-width: 920px; margin: 0; padding: 14px 16px; border-left: 2px solid var(--landing-gold); background: rgba(255,255,255,.055); color: #fff; font-size: .92rem; line-height: 1.55; }
+  .gallery { padding-bottom: 84px; }
+  .gallery-placeholder { display: grid; justify-items: center; min-height: 240px; padding: 32px 20px; border: 1px solid var(--landing-border); background: linear-gradient(135deg, #fff 0%, var(--landing-ivory) 100%); text-align: center; }
+  .photo-symbol { position: relative; display: flex; align-items: center; justify-content: center; gap: 7px; width: 94px; height: 58px; margin-bottom: 18px; border: 1px solid var(--landing-gold); }
+  .photo-symbol span { width: 13px; height: 13px; border: 1px solid var(--landing-gold); border-radius: 50%; }
+  .photo-symbol::after { position: absolute; right: 12px; bottom: 9px; left: 12px; height: 1px; background: var(--landing-gold); content: ""; }
+  .gallery-placeholder p { margin: 0 0 6px; color: var(--navy-800); font-weight: 650; }
+  .gallery-placeholder small { max-width: 450px; color: #687080; line-height: 1.5; }
+  .faq { display: grid; gap: 34px; padding-top: 84px; background: var(--landing-ivory); }
+  .faq-heading > p { max-width: 400px; color: var(--ink-700); font-size: .9rem; line-height: 1.6; }
+  .faq-list { border-top: 1px solid #d9e0ea; }
+  details { border-bottom: 1px solid #d9e0ea; }
+  summary { display: flex; justify-content: space-between; gap: 20px; padding: 18px 0; color: var(--navy-800); font-weight: 600; cursor: pointer; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary span { color: var(--landing-gold-text); font-size: 1.2rem; transition: transform .15s ease; }
+  details[open] summary span { transform: rotate(45deg); }
+  details > p { max-width: 620px; margin: -4px 0 18px; color: var(--ink-700); line-height: 1.65; }
+  .closing-cta { padding: clamp(56px, 9vw, 96px) max(22px, calc((100% - 1120px)/2)); color: var(--navy-900); background: #fff; }
+  .closing-cta .light { color: var(--landing-gold-text); }
+  .closing-cta h2 { max-width: 780px; color: var(--landing-navy); }
+  .closing-cta > p { max-width: 600px; margin: 20px 0 27px; color: var(--ink-700); line-height: 1.65; }
+  .button-light { border: 1px solid var(--landing-gold); border-radius: 3px; color: var(--landing-navy); background: var(--landing-gold); }
+  .button-light:hover { color: #fff; background: var(--landing-navy); }
+  .button-unavailable { color: #505b6f; border: 1px solid #cbd3df; }
+  .cta-telegram, .cta-phone { display: inline-flex; margin: 16px 0 0 17px; color: var(--landing-navy); font-size: .9rem; }
+  .cta-phone { margin-left: 12px; }
+  .footer { display: grid; gap: 15px; padding: 32px max(22px, calc((100% - 1120px)/2)) 28px; color: #d7deeb; background: var(--landing-navy-deep); }
+  .footer-brand { display: grid; width: fit-content; color: #fff; font-size: 1.1rem; font-weight: 700; text-decoration: none; }
+  .footer-brand span { color: #bac5d8; font-size: .77rem; font-weight: 400; }
+  .footer > p { margin: 0; color: var(--landing-gold); font-size: .88rem; }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 10px 20px; color: #c0cada; font-size: .78rem; }
+  .footer-links a { color: #c0cada; }
+  .concept-links { display:flex; flex-wrap:wrap; gap:8px 16px; color:#96a3ba; font-size:.72rem; }
+  .concept-links a { color:#e7d3a2; }
+  .footer > small { color: #96a3ba; font-size: .72rem; }
+  @media (min-width: 720px) { .intro-grid, .section-heading, .faq { grid-template-columns: 1fr 1fr; gap: 54px; } .audience-grid, .values-grid { grid-template-columns: repeat(2, 1fr); } .results-grid { grid-template-columns: repeat(3, 1fr); } .benefits { grid-template-columns: .9fr 1.1fr; align-items: start; gap: 80px; } .format-inner { grid-template-columns: .8fr 1.2fr; gap: 80px; } }
+  @media (min-width: 1000px) { .audience-grid { grid-template-columns: repeat(4, 1fr); } .values-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 760px) { .section[id], .closing-cta[id] { scroll-margin-top: 76px; } }
+  @media (max-width: 600px) { .section { padding-right: 18px; padding-left: 18px; } .cta-telegram, .cta-phone { margin-left: 0; } .faq { gap: 18px; } .closing-cta { padding-right: 18px; padding-left: 18px; } .footer { padding-right: 18px; padding-bottom: 96px; padding-left: 18px; } }
+</style>

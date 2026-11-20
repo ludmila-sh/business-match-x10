@@ -1,0 +1,46 @@
+:root {
+  --navy-900: #0b1a3c;
+  --navy-800: #12285a;
+  --navy-600: #1d3f8f;
+  --gold-500: #c9962b;
+  --gold-400: #ddb04a;
+  --gold-200: #f1dca3;
+  --cream-50: #f7f9fc;
+  --landing-navy: #0F2942;
+  --landing-navy-deep: #0B2238;
+  --landing-gold: #C29B48;
+  --landing-gold-text: #B58D3D;
+  --landing-ivory: #F3F2EE;
+  --landing-border: rgba(15, 43, 70, 0.08);
+  --ink-700: #3a4256;
+  --font-sans: "Onest Variable", system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  background: var(--cream-50);
+  color: var(--navy-900);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a:focus-visible {
+  outline: 3px solid var(--gold-400);
+  outline-offset: 3px;
+}

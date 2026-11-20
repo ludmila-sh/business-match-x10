@@ -2,61 +2,57 @@
 
 # Project
 
-Landing site for **Бизнес Мэтч** («Клуб успешных коллабораций»): free monthly meetings of entrepreneurs and experts in Minsk. The club has no site and no Instagram of its own; announcements go out through someone else's account and a Telegram group, and the club cannot be found by name in search.
+Static Russian-language landing page for **Бизнес Мэтч** («Клуб успешных коллабораций»), a free monthly meeting community for entrepreneurs, specialists and experts in Minsk.
 
-Goal: make the club findable and grow attendance from ~8–12 to a stable 18–20 people per meeting (later 30). On the site people should be able to: understand what the club is, sign up for the next meeting, contact the team (Telegram, phone).
+The website should help people understand the club and contact or register for a current meeting. Attendance goal: 18–20 per meeting, later 30. The repo name X10 refers to a separate Russian business community; do not put X10 on the site unless the team explicitly approves it.
 
-Volunteer project: the author is a team member, unpaid. There are no other technical people in the team and the future editor is unknown, so content must be editable by any non-technical team member without the author (see `ROADMAP.md`).
-
-The repo name "X10" refers to the Russian business community X10: Бизнес Мэтч was created separately from it but is loosely related. Do not use "X10" on the site unless the team decides so.
+This is unpaid volunteer work. The author currently maintains the site; no future editor is known. Plan for content to be maintainable by a non-technical teammate, but do not claim that is solved until an editor/CMS workflow is chosen and tested.
 
 ## Sources
 
-- `sources/philosophy.md` — values, cultural code, mission, strategy 2027–2030 (written by the project manager). The primary source for all texts.
-- `sources/logo.jpg`, `sources/logo-removebg*.png` — current logo (raster only, small; no vector yet). `sources/flyer.jpg` — a meeting flyer (time, venue, season results).
-- Real photos from past meetings exist at the manager's; not in the repo yet.
-- Read `sources/` before writing any site text.
+- Read `sources/philosophy.md` before writing or revising public-facing text. It contains values, the cultural code, the mission and a proposed strategy for 2027–2030.
+- `sources/flyer.jpg` contains the existing visual direction and meeting details, but its depicted people are not real club photos and must not be used on the site.
+- `sources/logo*.{jpg,png}` are small raster images. Ask the team for vector/high-resolution originals if needed.
+- Real photos exist with the manager but are not in the repository. Confirm consent before publication.
 
-## Stack
+## Stack and structure
 
-- Static site, Russian only, mobile-first (traffic comes from Instagram/Telegram).
-- Proposed: Astro + git-based CMS, free static hosting. Not approved yet, see `ROADMAP.md` → Open decisions.
-- All editable content (next meeting, form link, block texts, numbers, FAQ) lives in content files, never in markup.
-
-## Structure
-
-- `sources/` — raw materials from the team, not published as is.
-- `docs/` — notes for humans.
-- `credentials/` — local access files, not committed, the agent does not read them.
-- `ROADMAP.md` — goal, milestones, open decisions. `STATUS.md` — current state, overwritten.
+- Astro static output; Node.js `>=22.23.4`; exact dependencies in `package.json` and `package-lock.json`.
+- Do not add a server, database, signup form, CMS or analytics without a roadmap decision.
+- `src/content/site.json` is the source of all editable site copy, FAQs, current event details and contact URLs.
+- `src/components/` contains the two first-screen concepts; `/hero-a` and `/hero-b` are noindex review routes. The main page currently uses the calm concept; the manager has not approved the final direction.
+- `src/pages/` contains the main landing and privacy draft. `public/robots.txt` blocks indexing during review.
+- `sources/` contains raw team materials and is not published as-is. `ROADMAP.md` tracks decisions; `STATUS.md` records current state.
 
 ## Content rules
 
-- Never invent facts, numbers, testimonials, names, dates, addresses. Anything missing from `sources/` becomes a `TODO:` placeholder saying what to clarify.
-- Tone: warm, supportive, plain; address the reader as «вы». No infobusiness hype, no income promises.
-- Keep the honest disclaimer on the site: the club does not promise anyone a ready business or guaranteed income; it creates conditions in which joint results become possible.
-- Terminology: «круг» = a group of ~10 people sitting together; «раунд» = a stage of the meeting. Do not mix them.
-- Photos of people only real ones and only with their consent; no AI-generated people.
-- Decisions that affect later stages (stack, data storage, domain) are not made silently: record them in `ROADMAP.md` → Open decisions.
+- Never invent facts, numbers, testimonials, names, dates, addresses, contact details or outcomes. Put missing information into `ROADMAP.md` and use a clearly inactive/fallback state on the page.
+- Tone: warm, supportive and plain; address the reader as «вы». Avoid infobusiness hype and promises of income.
+- Keep the honest disclaimer: the club does not promise each participant a ready-made business or guaranteed income; it creates conditions in which joint results become possible.
+- Terminology: «круг» means a group of about ten people sitting together; «раунд» means a stage of the meeting.
+- Publish only real photos with permission. Never use AI-generated people or stock imagery presented as club members.
+- The first-season results supported by the sources are 6 registered projects, 2 successful projects and 1 project that reached monetization. Do not publish “85 participants” until the team confirms whether it means unique people or visits.
+- Keep registration disabled until a complete current meeting record and valid HTTPS registration URL are present. Telegram and phone links must be supplied by the team, not guessed.
+- `/privacy` is a draft and must not be presented as an approved policy. The data operator and legal wording need team and lawyer approval.
 
 ## Visual style
 
-- Keep the brand anchors: logo, navy + gold, motto «От действий к совместным результатам!».
-- Use them in a restrained, flat way: light background, navy/gold as accents, real photos, readable Cyrillic typography. No glossy 3D, lens flares, stock-like imagery or emoji headings.
+- Preserve brand anchors: current logo, navy and gold, and motto «От действий к совместным результатам!».
+- Main prototype uses a calm, light layout with readable Cyrillic typography and restrained brand color. `/hero-a` preserves a flyer-like concept for comparison; the manager/team decides the production style.
+- Do not use glossy 3D, lens flares, AI-looking stock scenes or emoji headings in the main site.
 
-## SEO / GEO (required in v1)
+## Security and accessibility
 
-- Semantic HTML, one `h1`, meaningful `title` and `meta description` with keywords: «бизнес мэтч минск», «нетворкинг для предпринимателей Минск», «бизнес-клуб Минск», «совместные проекты предпринимателей».
-- Open Graph / Twitter Card, JSON-LD (`Organization`, `Event` from content files, `FAQPage`), `sitemap.xml`, `robots.txt`, `llms.txt`.
-- Key facts (what, where, when, free, for whom) stated in text, never only in images. Images: WebP, `alt`, lazy-load.
+- The production site is static and must not collect personal data directly. No client-side JavaScript unless a clear need is approved.
+- Keep dependencies pinned, review lockfile changes, and run `npm audit` before dependency updates. `.npmrc` disables dependency install scripts; do not enable them casually.
+- External URLs must use HTTPS and links opening a new tab must include `rel="noopener noreferrer"`.
+- Preserve semantic HTML, keyboard-visible focus, meaningful image alt text and mobile layout. Do not put essential facts only in images.
+- Keep `robots.txt` disallowing crawling until the final domain and launch materials are ready. Add canonical URL, sitemap and deployment security headers only after the domain/host is chosen.
 
-## Personal data
+## Checks
 
-- Sign-up collects personal data (Law of the Republic of Belarus No. 99-З). The site needs a privacy policy and the form needs a consent text; the data operator and wording are agreed with a lawyer. Do not add new data collection without raising this.
+- `npm run check`
+- `npm run build`
+- `npm run audit`
 
-## README
-
-I do not write READMEs by hand: you maintain it following the structure already laid out in `README.md`. Rules:
-- Write in English, briefly: a README is read to start the project quickly and understand what it does.
-- Sections: one-sentence description, Quick start (install, run), Configuration, Usage (how to edit content), Project structure, Development (checks, hooks), Deployment. Delete an empty section, do not add extra ones.
-- Update the README when the way to run, the configuration or the structure change. Do not duplicate what is in `ROADMAP.md` and `STATUS.md`.
+Update `README.md`, `ROADMAP.md` and `STATUS.md` when the way to run, major decisions or delivery state changes. Do not edit `PERSONAL.md`, `rules/`, `dispatcher/` or `.claude/settings.json` unless explicitly requested.

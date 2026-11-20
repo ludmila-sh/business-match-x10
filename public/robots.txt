@@ -1,0 +1,3 @@
+# Not ready for indexing yet. Replace with an allow-all rule and a sitemap link at launch.
+User-agent: *
+Disallow: /

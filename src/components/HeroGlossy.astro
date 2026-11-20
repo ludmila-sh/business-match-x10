@@ -1,0 +1,182 @@
+---
+// Variant A: close to the current flyer style (dark navy, gold gradients, glow).
+import { Image } from "astro:assets";
+import logo from "../assets/logo-mark.png";
+import { formatMeetingDate, hasAnnouncedMeeting, site } from "../lib/site";
+
+const meeting = site.nextMeeting;
+const meetingDate = meeting.date ? formatMeetingDate(meeting.date) : null;
+const meetingAnnounced = hasAnnouncedMeeting();
+---
+
+<section class="hero">
+  <div class="inner">
+    <div class="brand">
+      <Image src={logo} alt="" width={96} loading="eager" />
+      <p class="tagline">{site.tagline}</p>
+    </div>
+
+    <h1>{site.name}</h1>
+    <p class="question">«{site.mainQuestion}»</p>
+    <p class="summary">{site.summary}</p>
+    <p class="motto">{site.motto}</p>
+
+    <div class="meeting">
+      <p class="label">Ближайшая встреча</p>
+      {meetingAnnounced && meetingDate ? <p class="when"><strong>{meetingDate.day}</strong>, {meetingDate.weekday} · {meeting.startTime}–{meeting.endTime}</p> : <p class="when">Дата следующей встречи будет объявлена</p>}
+      {meetingAnnounced ? <p class="where">{meeting.venueName}, {meeting.city}, {meeting.address}</p> : <p class="where">Бесплатные ежемесячные встречи в Минске</p>}
+      <p class="free">Участие бесплатное</p>
+    </div>
+
+    <div class="actions">
+      {
+        meetingAnnounced ? (
+          <a class="btn primary" href={meeting.registrationUrl} target="_blank" rel="noopener noreferrer">
+            Записаться
+          </a>
+        ) : (
+          <span class="btn primary" aria-disabled="true">Регистрация после анонса</span>
+        )
+      }
+      {
+        site.contacts.telegramUrl ? (
+          <a class="btn secondary" href={site.contacts.telegramUrl} target="_blank" rel="noopener noreferrer">
+            Написать в Telegram
+          </a>
+        ) : (
+          <span class="btn secondary" aria-disabled="true">Ссылка на Telegram появится здесь</span>
+        )
+      }
+    </div>
+
+    <div class="photo">TODO: фото с прошлой встречи</div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100svh;
+    padding: 32px 16px 48px;
+    color: #fff;
+    background:
+      radial-gradient(120% 60% at 80% 0%, rgba(221, 176, 74, 0.35), transparent 60%),
+      radial-gradient(90% 50% at 0% 100%, rgba(29, 63, 143, 0.8), transparent 70%),
+      linear-gradient(160deg, var(--navy-800), var(--navy-900));
+  }
+  .inner {
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .tagline {
+    margin: 0;
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-200);
+  }
+  h1 {
+    margin: 28px 0 8px;
+    font-size: clamp(2.6rem, 9vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #fff 0%, var(--gold-200) 45%, var(--gold-400) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 40px rgba(221, 176, 74, 0.25);
+  }
+  .question {
+    margin: 0 0 16px;
+    font-size: clamp(1.25rem, 4.5vw, 1.75rem);
+    font-weight: 700;
+    font-style: italic;
+  }
+  .summary {
+    max-width: 640px;
+    margin: 0 0 20px;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .motto {
+    display: inline-block;
+    margin: 0 0 28px;
+    padding: 8px 18px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--navy-900);
+    background: linear-gradient(90deg, var(--gold-400), var(--gold-200), var(--gold-400));
+    transform: skewX(-8deg);
+    box-shadow: 0 6px 24px rgba(221, 176, 74, 0.35);
+  }
+  .meeting {
+    padding: 20px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(221, 176, 74, 0.5);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(6px);
+  }
+  .meeting p {
+    margin: 0;
+  }
+  .label {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-400);
+  }
+  .when {
+    margin-top: 6px !important;
+    font-size: 1.25rem;
+  }
+  .where,
+  .free {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .btn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .btn small {
+    font-weight: 400;
+    font-size: 0.7rem;
+  }
+  .primary {
+    color: var(--navy-900);
+    background: linear-gradient(180deg, var(--gold-200), var(--gold-500));
+    box-shadow: 0 0 24px rgba(221, 176, 74, 0.6);
+  }
+  .secondary {
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+  .photo {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    border: 1px dashed rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.6);
+  }
+  @media (min-width: 900px) {
+    .hero {
+      padding: 48px 32px 64px;
+    }
+  }
+</style>
