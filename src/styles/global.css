@@ -2,16 +2,16 @@
   --navy-900: #0b1a3c;
   --navy-800: #12285a;
   --navy-600: #1d3f8f;
-  --gold-500: #c9962b;
-  --gold-400: #ddb04a;
-  --gold-200: #f1dca3;
+  --gold-on-dark: #CFA446;
+  --gold-on-light: #9E7622;
   --cream-50: #f7f9fc;
-  --landing-navy: #0F2942;
-  --landing-navy-deep: #0B2238;
-  --landing-gold: #C29B48;
-  --landing-gold-text: #B58D3D;
-  --landing-ivory: #F3F2EE;
-  --landing-border: rgba(15, 43, 70, 0.08);
+  --landing-navy: #09162B;
+  --landing-navy-deep: #071225;
+  --landing-blue-end: #102442;
+  --landing-ivory: #F5F7FA;
+  --landing-border: rgba(13, 33, 59, 0.08);
+  --landing-ink: #102238;
+  --landing-muted: #4A5A6E;
   --ink-700: #3a4256;
   --font-sans: "Onest Variable", system-ui, sans-serif;
 }
@@ -41,6 +41,6 @@ img {
 }
 
 a:focus-visible {
-  outline: 3px solid var(--gold-400);
+  outline: 3px solid var(--gold-on-light);
   outline-offset: 3px;
 }

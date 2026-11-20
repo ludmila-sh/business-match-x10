@@ -59,7 +59,7 @@ const meetingAnnounced = hasAnnouncedMeeting();
     padding: 32px 16px 48px;
     color: #fff;
     background:
-      radial-gradient(120% 60% at 80% 0%, rgba(221, 176, 74, 0.35), transparent 60%),
+      radial-gradient(120% 60% at 80% 0%, rgba(207, 164, 70, 0.25), transparent 60%),
       radial-gradient(90% 50% at 0% 100%, rgba(29, 63, 143, 0.8), transparent 70%),
       linear-gradient(160deg, var(--navy-800), var(--navy-900));
   }
@@ -77,7 +77,7 @@ const meetingAnnounced = hasAnnouncedMeeting();
     font-size: 0.8rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--gold-200);
+    color: var(--gold-on-dark);
   }
   h1 {
     margin: 28px 0 8px;
@@ -85,11 +85,7 @@ const meetingAnnounced = hasAnnouncedMeeting();
     font-weight: 800;
     line-height: 1.05;
     text-transform: uppercase;
-    background: linear-gradient(90deg, #fff 0%, var(--gold-200) 45%, var(--gold-400) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: 0 0 40px rgba(221, 176, 74, 0.25);
+    color: #fff;
   }
   .question {
     margin: 0 0 16px;
@@ -109,14 +105,14 @@ const meetingAnnounced = hasAnnouncedMeeting();
     font-weight: 700;
     font-style: italic;
     color: var(--navy-900);
-    background: linear-gradient(90deg, var(--gold-400), var(--gold-200), var(--gold-400));
+    background: var(--gold-on-dark);
     transform: skewX(-8deg);
-    box-shadow: 0 6px 24px rgba(221, 176, 74, 0.35);
+    box-shadow: 0 8px 20px rgba(9, 22, 43, 0.22);
   }
   .meeting {
     padding: 20px;
     margin-bottom: 24px;
-    border: 1px solid rgba(221, 176, 74, 0.5);
+    border: 1px solid rgba(207, 164, 70, 0.5);
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(6px);
@@ -128,7 +124,7 @@ const meetingAnnounced = hasAnnouncedMeeting();
     font-size: 0.8rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--gold-400);
+    color: var(--gold-on-dark);
   }
   .when {
     margin-top: 6px !important;
@@ -159,8 +155,8 @@ const meetingAnnounced = hasAnnouncedMeeting();
   }
   .primary {
     color: var(--navy-900);
-    background: linear-gradient(180deg, var(--gold-200), var(--gold-500));
-    box-shadow: 0 0 24px rgba(221, 176, 74, 0.6);
+    background: var(--gold-on-dark);
+    box-shadow: 0 8px 20px rgba(9, 22, 43, 0.22);
   }
   .secondary {
     color: #fff;
